@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="ISO-8859-1">
+
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+</head>
+<title>Welcome to the shop</title>
+<body>
+	<div class="container-fluid">
+		<div>
+			<div th:replace="navigation :: header_menu"></div>
+
+			<div class="text-center">
+				<h1>Online Shop</h1>
+			</div>
+
+
+		</div>
+
+		<div class="flex-container">
+			<div class="col-md-8">
+
+				<form th:action="@{/products/page/1}" method="get"
+					th:object="${products}" class="form-inline">
+					
+					<input th:if ="${minPrice == null}" type="hidden"
+						name="minPrice" value="0" /> 
+						<input th:if ="${maxPrice == null}" type="hidden"
+						name="maxPrice" th:value="${maximumPrice}" /> 
+					<input type="search" name="keyword" th:value="${keyword}"
+						class="form-control" required /> <input type="hidden"
+						name="sortField" th:value="${sortField}" /> <input type="hidden"
+						name="sortDir" th:value="${sortDir}" /> &nbsp;&nbsp;
+					<button type="submit" class="btn btn-primary">Search</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-secondary"
+						onclick="clearFilter()">Clear</button>
+				</form>
+			</div>
+
+			<div class="col-md-6">
+				<form
+					th:action="@{/products/page/1?sortField=name&sortDir=asc(minPrice=${minPrice}, maxPrice=${maxPrice})}">
+
+					<input type="hidden" name="sortField" th:value="${sortField}" /> <input
+						type="hidden" name="sortDir" th:value="${sortDir}" />
+					<p>
+					<h6>Filter by price</h6>
+					</p>
+					<input type="number" name="minPrice" id="minPrice" size="50"
+						class="form-control col-sm-2" th:value="${minPrice}" required />
+					<br> <input type="number" name="maxPrice" id="maxPrice"
+						size="50" class="form-control col-sm-2" th:value="${maxPrice}"
+						required /> </br> <input type="submit" class="btn btn-primary"
+						value="Search" />
+
+				</form>
+			</div>
+		</div>
+		
+		<div>&nbsp;</div>
+	
+	
+		
+			<div class="row card-deck" th:each="product : ${products}">
+				<div class="col-lg-4 col-md-6 mb-4">
+
+					<div class="card text-center">
+						<div class="card-header">
+							<h4>
+								<p th:text="${product.name}"></p>
+							</h4>
+						</div>
+
+						<div class="card-body">
+							<img class="card-img-top" th:src="@{${product.mainImage}}"
+								width="25" height="60" />
+							<h5 class="card-title">
+								<p th:text="${{product.price}}"></p>
+							</h5>
+
+							<p th:text="${product.shortDescription}"></p>
+						</div>
+
+						<div class="row">
+							<div class="col-4 padding-0"></div>
+							<div class="row">
+								<div class="col-4 padding-0"></div>
+
+
+								<div class="col-4 padding-0">
+
+
+									<button type="submit" class="btn btn-primary">Add To
+										Cart</button>
+
+
+									<div class="col-4 padding-0"></div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="text-center m-1" th:if="${totalItems >0 }">
+			<span> Showing products #[[${startCount}]] to [[${endCount}]]
+				of [[${totalItems}]]</span>
+
+		</div>
+		<div class="text-center m-1" th:unless="${totalItems >0 }">
+			<span> No products found</span>
+
+		</div>
+
+		<div th:if="${totalItems> 0}" class="text-center">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li class="page-item"><a
+						th:replace="fragments :: page_link(1,'First')"></a></li>
+					<li
+						th:class="${ currentPage > 1 ? 'page-item' : 'page-item disabled'}"><a
+						th:replace="fragments :: page_link(${currentPage-1},'Previous')"></a></li>
+					<li
+						th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+						th:each="i : ${#numbers.sequence(1,totalPages)}"><a
+						th:replace="fragments :: page_link(${i},${i})"></a></li>
+
+					<li
+						th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a
+						th:replace="fragments :: page_link(${currentPage+1},'Next')"></a></li>
+					<li
+						th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a
+						th:replace="fragments :: page_link(${totalPages},'Last')"></a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div th:replace="navigation :: footer_menu"></div>
+	</div>
+	<script type="text/javascript">
+		function clearFilter() {
+			window.location = "/products" + moduleUrl
+			console.log("here")
+		}
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
