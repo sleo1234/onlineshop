@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.onlineshop.customer.Customer;
 import com.onlineshop.exception.ProductNotFoundException;
 import com.onlineshop.product.Product;
 import com.onlineshop.product.ProductRepository;
@@ -101,4 +102,7 @@ public class ProductController {
 		Integer numberOfProduct = Integer.valueOf(products.size());
 		return numberOfProduct;
 	}
+	
+	
+	
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+   <!--  Required meta tags -->
+<meta charset="UTF-8">
+<meta name = "viewport" content = "width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--  Bootstrap CSS -->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
+			
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
+	
+</head>
+<title>
+<p>Log in to Online Shop</p>
+</title>
+<body>
+
+	<div class="container-fluid text-center">
+
+		<div>
+
+			<img th:src="@{images/ShopmeAdminSmall.png}" />
+		</div>
+
+	
+		<div>&nbsp;</div>
+		
+		<form th:action="@{/login}" method="post"
+			style="max-width: 350px; margin: 0 auto">
+			<div th:if="${param.error}">
+				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			</div>
+			<div th:if="${param.logout}">
+				<p class="text-warning">You have been logged out.</p>
+			</div>
+			<div class="border border-secondary rounded p-3">
+				<p>Access to Online Shop</p>
+
+				<p>
+					<input type="email" name="email" placeholder="E-mail"
+						class="form-control" required />
+				</p>
+				<p>
+					<input type="password" name="password" placeholder="Password"
+						class="form-control" required />
+				</p>
+				<p>
+					<input type="checkbox" name="remember-me" />&nbsp;Remember Me
+				</p>
+				<p>
+					<input type="submit" value="login" class="btn btn-primary" />
+				</p>
+			</div>
+
+		</form>
+         
+         <div>&nbsp;</div>
+         <div>&nbsp;</div>
+         <div>
+         
+         or <a th:href="@{/forgot_password}">Forgot password</a>
+         
+         </div>
+           <div>Don't have an account? <b><a th:href="@{/register}">Sign up</a></b></div>
+            <div>&nbsp;</div>
+		<div>
+			<p>Shopme Online Shop - Copyright &copy; Shopme</p>
+		</div>
+	</div>
+</body>
+</html>

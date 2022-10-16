@@ -21,6 +21,7 @@
 </head>
 <title>Welcome to the shop</title>
 <body>
+
 	<div class="container-fluid">
 		<div>
 			<div th:replace="navigation :: header_menu"></div>
@@ -89,9 +90,21 @@
 
 						<div class="card-body">
 							<img class="card-img-top" th:src="@{${product.mainImage}}"
-								width="25" height="60" />
+								width="10" height="400" />
 							<h5 class="card-title">
-								<p th:text="${{product.price}}"></p>
+							<div th:if="${product.discountPercent > 0}">
+
+					Price: <span style="font-size: larger; color: darkred">
+						 [[${product.discountPrice}]] </span>
+					([[${product.discountPercent}]] % off)
+				</div>
+				<div>
+					List price: <span th:if="${product.discountPercent <=0}">$
+						[[${product.price}]]</span>
+					<del th:if="${product.discountPercent > 0}">
+						<span>[[${product.price}]]</span>
+					</del>
+				</div>
 							</h5>
 
 							<p th:text="${product.shortDescription}"></p>
@@ -108,7 +121,7 @@
 
 									<button type="submit" class="btn btn-primary">Add To
 										Cart</button>
-
+                                       &nbsp;
 
 									<div class="col-4 padding-0"></div>
 

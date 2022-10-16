@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "products")
@@ -162,7 +163,13 @@ public class Product {
 	public void setMainImage(String mainImage) {
 		this.mainImage = mainImage;
 	}
-
+ 
+	 
+	 @Transient
+	 
+	 public float getDiscountPrice() {
+		 return  this.price *(1.0f- this.discountPercent) ;
+	 }
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", shortDescription=" + shortDescription + ", fullDescription="

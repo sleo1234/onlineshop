@@ -29,6 +29,12 @@ public class MainController {
 	   return "index";
    }
 	
+   @GetMapping("/login")
+   
+   public String showLoginpage() {
+	   
+	   return "/login";
+   }
 
 	
 }
