@@ -79,7 +79,7 @@ public class ProductController {
 		model.addAttribute("moduleURL", "/products");
 		model.addAttribute("keyword", keyword);
         System.out.println("kewyord: " + keyword);
-		return "products";
+		return "product/products";
 		
 	}
 	
@@ -93,6 +93,16 @@ public class ProductController {
 	    model.addAttribute("maximumPrice",maxValue);
 		return maxValue;
 	}
+	
+	@GetMapping("/products/product_detail/{productId}")
+	public String productDetail (@PathVariable ("productId") Integer productId,Model model) {
+		Product product = prodRepo.findById(productId).get();
+		
+		
+		model.addAttribute("product",product);
+		return "product/product_detail";
+	}
+	
 	
 	public Integer getTotalOfProducts (@Param("keyword") String keyword,
 			@Param("minPrice")  Float minPrice, @Param("maxPrice") Float maxPrice) {

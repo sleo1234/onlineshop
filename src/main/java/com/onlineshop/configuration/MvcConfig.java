@@ -9,7 +9,9 @@ public class MvcConfig {
 	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		exposeDirectory("product-photos", registry);
-		
+		 registry
+         .addResourceHandler("/webjars/**")
+         .addResourceLocations("/webjars/");
 		exposeDirectory("../site-logo", registry);
 	}
 	
@@ -23,5 +25,6 @@ public class MvcConfig {
 			.addResourceLocations("file:/" + absolutePath + "/");		
 	}
 
-
+	
+	
 }
