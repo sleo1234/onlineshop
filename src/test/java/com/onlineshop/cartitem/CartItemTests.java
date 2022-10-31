@@ -26,5 +26,11 @@ public class CartItemTests {
 		assertThat(cartItem.getQuantity()).isEqualTo(3);
 	}
 	
+	@Test 
 	
+	public void testDeleteAllFromCart() {
+		cartRepo.deleteByCustomer(1);
+		
+		
+	}
 }

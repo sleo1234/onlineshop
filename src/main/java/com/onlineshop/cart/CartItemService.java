@@ -1,7 +1,10 @@
 package com.onlineshop.cart;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.onlineshop.customer.Customer;
 import com.onlineshop.customer.CustomerRepository;
@@ -9,7 +12,9 @@ import com.onlineshop.exception.ShoppingCartException;
 import com.onlineshop.product.Product;
 import com.onlineshop.product.ProductRepository;
 
+
 @Service
+@Transactional
 public class CartItemService {
 
 	@Autowired
@@ -45,5 +50,29 @@ public class CartItemService {
 		
 		return updatedQuantity;
 	}
+
+	public List<CartItem> getCartItems(Customer customer){
+    	return cartRepo.findByCustomer(customer);
+    }
+	
+	public void deleteProductFromCart(Integer productId, Customer customer) {
+   	 
+   	 cartRepo.deleteByCustomerAndProduct(customer.getId(), productId);
+   	 
+    }
+	
+	public float updateQuantity(Integer productId, Integer quantity, Customer customer) {
+   	 cartRepo.updateQuantity(quantity, customer.getId(), productId);
+   	 Product product = prodRepo.findById(productId).get();
+   	 float subtotal = product.getDiscountPrice() * quantity;
+   	 return subtotal;
+   	 
+    }
+	
+	public void deleteAllFromCart(Integer customerId) {
+   	 cartRepo.deleteByCustomer(customerId);
+    }
+	
+	
 
 }

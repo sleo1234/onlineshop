@@ -18,3 +18,4 @@ function showWarningModal (message){
 
 		showModalDialog("Warning", message);
 	}	
+

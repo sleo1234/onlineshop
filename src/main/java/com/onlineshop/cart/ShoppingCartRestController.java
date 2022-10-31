@@ -1,8 +1,11 @@
 package com.onlineshop.cart;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +22,7 @@ public class ShoppingCartRestController {
 	
 	@Autowired CartItemService cartService;
 	@Autowired CustomerService custService;
+	@Autowired CartItemRepository cartRepo;
 	
 	@PostMapping("/cart/add/{productId}/{quantity}")
 	
@@ -52,4 +56,61 @@ public class ShoppingCartRestController {
 		
 		return custService.getByEmail(email);
 	}
+	
+	@DeleteMapping("/cart/delete/{productId}")
+ 	
+ 	public String deleteProduct(@PathVariable("productId") Integer productId, HttpServletRequest request) {
+ 		
+ 		try {
+ 			Customer authCustomer = getAuthenticatedCustomer(request);
+ 	   cartService.deleteProductFromCart(productId, authCustomer);
+ 		return "deleted";
+ 		
+ 		} catch (CustomerNotFoundException e) {
+ 			// TODO Auto-generated catch block
+ 			return "product not found";
+ 		
+ 	}
+ 	
+ 	}
+
+		@PostMapping("/cart/update/{productId}/{quantity}")
+		public String updateQuantity(@PathVariable("productId") Integer productId, @PathVariable("quantity") Integer quantity,
+				HttpServletRequest request)  {
+			try {
+				Customer authCustomer = getAuthenticatedCustomer(request);
+			float subtotal = cartService.updateQuantity(productId, quantity, authCustomer);
+			return String.valueOf(subtotal);
+			
+			} catch (CustomerNotFoundException e) {
+				// TODO Auto-generated catch block
+				return "You mast login to change quantity of product";
+			
+		}
+		
+		}
+		
+		
+		@DeleteMapping("cart/empty_cart")
+		
+		public String emptyCart(HttpServletRequest request) throws CustomerNotFoundException {
+			
+			Customer authCustomer = getAuthenticatedCustomer(request);
+			cartService.deleteAllFromCart(authCustomer.getId());
+			return "all_deleted";
+		}
+		
+		
+		@GetMapping("cart/items")
+		
+		public String getItems(HttpServletRequest request) throws CustomerNotFoundException {
+			Customer authCustomer = getAuthenticatedCustomer(request);
+			
+			List<CartItem> items = cartRepo.findByCustomer(authCustomer);
+			if (items.size() > 0) {
+				return "not_empty";
+			}
+			return "empty";
+		}
+		
 }
