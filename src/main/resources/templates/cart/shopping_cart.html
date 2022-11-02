@@ -16,90 +16,86 @@
 
 	</div>
 
-	<div class="row m-1" id="cart">
-		<div class="col-sm-8">
+	<div class="cart">
+		<div class="row m-1" id="cart">
+			<div class="col-sm-8">
 
-			<th:block th:each="item, status :${cartItems}">
-				<div class="row border rounded p-1" th:id="'div'+${product.id}"
-					th:with="product=${item.product}">
+				<th:block th:each="item, status :${cartItems}">
+					<div class="row border rounded p-1" th:id="'div'+${product.id}"
+						th:with="product=${item.product}">
 
-					<div class="col-1">
-						<div>[[${status.count}]]</div>
-						<div>
-							<input type="button"  class="btn btn-danger mr-2"
-								id="deleteProduct" th:pid="${product.id}" value="X" />
-						</div>
-					</div>
-					<div class="col-1">
-
-						<div>[[${product.name}]]</div>
-					</div>
-					<div class="col-3">
-						<img th:src="@{${product.mainImage}}" class="img-fluid" />
-					</div>
-					<div class="col-6">
-
-
-						<div
-							th:replace="cart/quantity_control :: quantity_control(${item.quantity},${product.id})"></div>
-						<div>
-							<span>X&nbsp;</span>
+						<div class="col-1">
+							<div>[[${status.count}]]</div>
 							<div>
-
-								<div th:if="${product.discountPercent > 0}">
-
-									Price: <span style="font-size: larger; color: darkred">
-										[[${product.discountPrice}]] $</span> ([[${product.discountPercent}]]
-									% off)
-								</div>
-								<div>
-									List price: <span th:if="${product.discountPercent <=0}">$
-										[[${product.price}]] </span>
-									<del th:if="${product.discountPercent > 0}">
-										<span>[[${product.price}]] </span>
-									</del>
-								</div>
+								<input type="button" class="btn btn-danger mr-2"
+									id="deleteProduct" th:pid="${product.id}" value="X" />
 							</div>
-
-
-
 						</div>
-						<div>
-							<span>&nbsp;</span>$<span th:id="'subtotal' +${product.id}"
-								class="h4 subtotal">[[${item.subtotal}]]</span> </span>
+						<div class="col-1">
+
+							<div>[[${product.name}]]</div>
+						</div>
+						<div class="col-3">
+							<img th:src="@{${product.mainImage}}" class="img-fluid" />
+						</div>
+						<div class="col-6">
+
+
+							<div
+								th:replace="cart/quantity_control :: quantity_control(${item.quantity},${product.id})"></div>
+							<div>
+								<span>X&nbsp;</span>
+								<div>
+
+									<div th:if="${product.discountPercent > 0}">
+
+										Price: <span style="font-size: larger; color: darkred">
+											[[${product.discountPrice}]] $</span>
+										([[${product.discountPercent}]] % off)
+									</div>
+									<div>
+										List price: <span th:if="${product.discountPercent <=0}">$
+											[[${product.price}]] </span>
+										<del th:if="${product.discountPercent > 0}">
+											<span>[[${product.price}]] </span>
+										</del>
+									</div>
+								</div>
+
+
+
+							</div>
+							<div>
+								<span>&nbsp;</span>$<span th:id="'subtotal' +${product.id}"
+									class="h4 subtotal">[[${item.subtotal}]]</span> </span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row m-1">&nbsp;</div>
-			</th:block>
-		</div>
+					<div class="row m-1">&nbsp;</div>
+				</th:block>
+			</div>
 
-		<div class="col-sm-4">
-
-			<div>
+			<div class="col-sm-4">
 
 				<div>
-					<span class="h3">Estimated total: <span>=&nbsp;</span>$<span
-						id="total" class="h4">[[${total}]]</span>
-					</span></span>
+
+					<div th:unless="${#lists.isEmpty(cartItems)}">
+						<span class="h3">Estimated total: <span>=&nbsp;</span>$<span
+							id="total" class="h4">[[${total}]]</span>
+						</span></span>
+					</div>
 				</div>
-				<div class="mt-2">
+				<div class="mt-2" th:unless="${#lists.isEmpty(cartItems)}">
 					<button class="btn btn-danger">Check out</button>
 				</div>
 			</div>
-
-               <div>
-
-				<div class="mt-2">
-					<button class="btn btn-danger" id="emptyCart">Empty cart</button>
-				</div>
-			</div>
-
 
 		</div>
 
 
 	</div>
+
+
 	<div class="modal fade text-center" id="confirmModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -125,7 +121,11 @@
 	<div class="text-center" th:if="${#lists.isEmpty(cartItems)}">
 		<h3>You have not chosen any products yet</h3>
 	</div>
-	
+
+	<div class="mt-2" th:unless="${#lists.isEmpty(cartItems)}">
+		<button class="btn btn-danger" id="emptyCart">Empty cart</button>
+	</div>
+
 	<div th:replace="fragments :: modal_dialog"></div>
 	<script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
 

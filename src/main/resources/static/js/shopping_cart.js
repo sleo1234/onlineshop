@@ -4,7 +4,7 @@ $(document).ready(
 		
 		
 		function() {
-			
+		
 			
 			$(".linkMinus").on("click", function(evt) {
 			
@@ -129,7 +129,7 @@ function deleteProduct(productId){
 			}
 		}).done(function () {
 		console.log("here")
-		
+	
 		
 		}).fail( function (response){
 			showErrorModal("Error while deleting.");
@@ -146,25 +146,34 @@ function deleteProduct(productId){
 	
 	$("#confirmText").text(message);
 	$("#yesButton").click(function (){
-		//emptyCart()
-		alert(isCartEmpty())
+		
+		emptyCart()
+		
+		$( ".cart" ).remove();
 	})
 	$("#confirmModal").modal();	
 }
 	
 	function isCartEmpty() {
-		url = "cart/items";
-	   $.get(url,function (response){
-			console.log(response)
+		url =contextPath+ "cart/items";
+	  
+		var response = $.get(url , function (response){
+			
 		});
-		
-		if (response == "not_empty") {
-			return false;
+		console.log(response)
+		if (response == "empty") {
+			
+			return true;
 		}
-		return true
+		alert(response)
+		return false
 	}
 	
 	
 	
 	
+
+	
+	
+	//alert(res)
 	
