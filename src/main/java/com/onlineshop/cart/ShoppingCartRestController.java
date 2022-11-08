@@ -36,7 +36,7 @@ public class ShoppingCartRestController {
 		return updatedQuantity + " item(s) were added in the cart";
 		}
 		catch(CustomerNotFoundException e) {
-			return "You must login to add a product to the cart";
+			return "You must login to add a product to the cart. Log in?";
 		}
 		
 		catch (ShoppingCartException e) {
@@ -84,7 +84,7 @@ public class ShoppingCartRestController {
 			
 			} catch (CustomerNotFoundException e) {
 				// TODO Auto-generated catch block
-				return "You mast login to change quantity of product";
+				return "You must login to change quantity of product. Log in?";
 			
 		}
 		
