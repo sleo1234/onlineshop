@@ -149,7 +149,7 @@ function deleteProduct(productId){
 		
 		emptyCart()
 		
-		$( ".cart" ).remove();
+		window.location.href="shop/cart"
 	})
 	$("#confirmModal").modal();	
 }

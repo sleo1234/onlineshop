@@ -2,6 +2,8 @@ package com.onlineshop;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -31,10 +33,13 @@ public class MainController {
 	
    @GetMapping("/login")
    
-   public String showLoginpage() {
+   public String showLoginpage(HttpServletRequest request, Model model) {
 	   
+	  
 	   return "/login";
    }
+   
+
 
 	
 }

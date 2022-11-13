@@ -26,7 +26,7 @@ public class CustomerService {
 		
 		
 		if (customer != null && customer.getId() != null) {
-			return false;
+			return true;
 		}
 		return customer == null;
 	}

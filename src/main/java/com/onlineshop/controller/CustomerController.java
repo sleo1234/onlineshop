@@ -53,8 +53,20 @@ public class CustomerController {
 		}
 	
 	
+	  @GetMapping("/update_account")
+	  
+	  public String updateAccountDetails (Model model, HttpServletRequest request) {
+		  
+		  String email = Utility.getEmailOfAtuthenticatedCustomer(request);
+		  Customer authenticatedCustomer = custService.getByEmail(email);
+		  model.addAttribute("customer", authenticatedCustomer);
+		  return "/customer/edit_customer";
+		  
+	  }
+	
 	private void sendVerificationEmail(HttpServletRequest request, Customer customer) throws UnsupportedEncodingException, MessagingException {
-		System.out.println("-------------------------");
+		
+		
 		EmailSettingBag emailSettings = settingService.getEmailSettings();
 		JavaMailSenderImpl mailSender = Utility.prepareMailSender(emailSettings);
 		String toAdress = customer.getEmail();
@@ -73,8 +85,11 @@ public class CustomerController {
 	    content = content.replace("[[URL]]", verifyURL);
 	    helper.setText(content, true);
 	    mailSender.send(message);
-	  
-	    System.out.println("to Adress: " + toAdress);
-	    System.out.println("VerifyURL: " + verifyURL);
+		
+	   
 	}
+	
+	
+	
+	
 }

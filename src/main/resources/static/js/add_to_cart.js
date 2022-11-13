@@ -41,18 +41,18 @@ function addToCart() {
 
 }
 
-function showConfirmationModal(message) {
-
-	$("#confirmText").text(message);
-	$("#yesButton").click(function(event) {
-		$("a").attr("href", "/shop/login")
-
-	})
-	$("#confirmModal").modal();
-}
-
-function redirectToLoginPage(message) {
-
-	window.location.href = "/shop/login"
-
-}
+			function showConfirmationModal(message) {
+			
+				$("#confirmText").text(message);
+				$("#yesButton").click(function(event) {
+					$("a").attr("href", "/shop/login")
+			
+				})
+				$("#confirmModal").modal();
+			}
+			
+			function redirectToLoginPage(message) {
+			
+				window.location.href = "/shop/login"
+			
+			}

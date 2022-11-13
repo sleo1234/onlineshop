@@ -2,8 +2,9 @@ package com.onlineshop.controller;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.onlineshop.customer.Customer;
 import com.onlineshop.exception.ProductNotFoundException;
 import com.onlineshop.product.Product;
 import com.onlineshop.product.ProductRepository;
@@ -94,13 +94,22 @@ public class ProductController {
 		return maxValue;
 	}
 	
-	@GetMapping("/products/product_detail/{productId}")
-	public String productDetail (@PathVariable ("productId") Integer productId,Model model) {
+	@GetMapping("/product_detail/{productId}")
+	public String productDetail (@PathVariable ("productId") Integer productId,Model model, HttpServletRequest request) {
 		Product product = prodRepo.findById(productId).get();
 		
 		
 		model.addAttribute("product",product);
+	    String url = request.getRequestURL().toString();
+	    request.getSession().setAttribute("url_prior_login", url);
+		
 		return "product/product_detail";
+	}
+	
+	public String getRequestUrl(HttpServletRequest request) {
+		
+		String url = request.getRequestURL().toString();
+		return url;
 	}
 	
 	

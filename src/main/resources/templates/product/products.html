@@ -25,6 +25,7 @@
 	<div class="container-fluid">
 		<div>
 			<div th:replace="navigation :: header_menu"></div>
+			<div th:replace ="fragments :: confirm_modal"></div>
 
 			<div class="text-center">
 				<h1>Online Shop</h1>
@@ -32,17 +33,18 @@
 
 			<div class="container" align="right">
 				<th:block sec:authorize="isAuthenticated()">
-					<a class="nav-link" th:href="@{/}"
+					<a class="nav-link" th:href="@{/update_account}"
 						sec:authentication="principal.fullName"></a>
 					</b>
 
-					<form th:action="@{/logout}" method="post" th:hidden="false"
-						name="logoutForm">
+					<a class="nav-link" href="">
+								<form th:action="@{/logout}" method="post" th:hidden="false"
+									name="logoutForm">
 
-						<input type="submit" value="logout" class="btn btn" />
+									<input type="submit" value="logout" />
 
-					</form>
-					</a>
+								</form>
+						</a>
 				</th:block>
 			</div>
 		</div>
@@ -101,7 +103,7 @@
 					<div class="card-header">
 
 						<h4>
-							<a th:href="@{'products/product_detail/' + ${product.id}}"><p
+							<a th:href="@{'/product_detail/' + ${product.id}}"><p
 									th:text="${product.name}"></p></a>
 
 						</h4>
@@ -187,8 +189,11 @@
 			window.location = "/products" + moduleUrl
 			console.log("here")
 		}
+		
+	
 	</script>
 	<script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
 </body>
 </html>
 
