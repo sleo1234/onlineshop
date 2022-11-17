@@ -26,6 +26,7 @@ public class CustomerDetails implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		authorities.add(new SimpleGrantedAuthority("ADMIN"));
+	authorities.add(new SimpleGrantedAuthority("CUSTOMER"));
 		return authorities;
 	}
 

@@ -102,15 +102,11 @@ public class ProductController {
 		model.addAttribute("product",product);
 	    String url = request.getRequestURL().toString();
 	    request.getSession().setAttribute("url_prior_login", url);
-		
+		System.out.println("Session-------------- " + request.getSession().getId());
 		return "product/product_detail";
 	}
 	
-	public String getRequestUrl(HttpServletRequest request) {
-		
-		String url = request.getRequestURL().toString();
-		return url;
-	}
+	
 	
 	
 	public Integer getTotalOfProducts (@Param("keyword") String keyword,

@@ -43,9 +43,9 @@ public class CustomerController {
 		
 		public String registerCustomer (Model model,HttpServletRequest request, Customer customer, RedirectAttributes ra) throws UnsupportedEncodingException, MessagingException {
 		
-		
+		    if (customer == null) {
 			sendVerificationEmail(request, customer);
-			
+		    }
 			custService.saveCustomer(customer);
 			
 			ra.addFlashAttribute("message", "You have been susccesfully regstered to the site");
