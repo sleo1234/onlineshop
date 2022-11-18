@@ -6,11 +6,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlineshop.exception.ProductNotFoundException;
 import com.onlineshop.product.Product;
 import com.onlineshop.product.ProductRepository;
 
@@ -30,6 +34,18 @@ public class ProductApiController {
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		System.out.println("----------------------------" + token.getToken().toString());
 		return (List<Product>) prodRepo.findAll();
+	}
+	
+	@DeleteMapping("/api/delete/{id}")
+	public void deleteProduct (@PathVariable("id") Integer id) throws ProductNotFoundException {
+		
+		prodRepo.deleteById(id);
+	}
+	
+	@PatchMapping("/api/update/")
+	public Product updateProduct (@RequestBody Product product) throws ProductNotFoundException {
+		
+		return prodRepo.save(product);		
 	}
 	
 }

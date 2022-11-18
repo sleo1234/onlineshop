@@ -1,5 +1,7 @@
 package com.onlineshop.product;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -168,7 +170,10 @@ public class Product {
 	 @Transient
 	 
 	 public float getDiscountPrice() {
-		 return  this.price *(1.0f- this.discountPercent) ;
+		 NumberFormat formatter = new DecimalFormat();
+		 String formatedPrice = formatter.format(this.price *(1.0f- (float) this.discountPercent/100)).replace(",", ".");
+		 
+		 return  Float.valueOf(formatedPrice) ;
 	 }
 	@Override
 	public String toString() {

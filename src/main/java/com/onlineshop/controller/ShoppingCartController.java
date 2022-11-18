@@ -1,6 +1,8 @@
 package com.onlineshop.controller;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Formatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,7 @@ public class ShoppingCartController {
 
 	@Autowired CartItemService cartService;
 	@Autowired CustomerService custService;
-	
+	 NumberFormat  formatter = new DecimalFormat("#.##");
 	@GetMapping("/cart")
 	public String viewCart(Model model, HttpServletRequest request) {
 		
@@ -39,9 +41,9 @@ public class ShoppingCartController {
 				.stream()
 				.reduce(0.0f, (c,d)-> c+d );
 	
-		
-		System.out.println("--------------" + total);
-		model.addAttribute("total", total);
+		float formatedTotal = Float.valueOf(formatter.format(total).replace(",","."));
+		System.out.println("--------------" + formatedTotal);
+		model.addAttribute("total", formatedTotal);
 		
 		
 	
