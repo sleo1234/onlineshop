@@ -42,10 +42,24 @@ public class ProductApiController {
 		prodRepo.deleteById(id);
 	}
 	
-	@PatchMapping("/api/update/")
-	public Product updateProduct (@RequestBody Product product) throws ProductNotFoundException {
+	@PatchMapping("/api/update/{id}")
+	public Product updateProductById (@PathVariable("id") Integer id, @RequestBody Product product) throws ProductNotFoundException {
 		
-		return prodRepo.save(product);		
+		Product productToBeUpdated = prodRepo.findById(id).get();
+		productToBeUpdated.setName(product.getName());
+		productToBeUpdated.setDiscountPercent(product.getDiscountPercent());
+		
+		return prodRepo.save(productToBeUpdated);		
+	}
+	
+	@PatchMapping("/api/update_by_name/{name}")
+	public Product updateProductByName (@PathVariable("name") String name, @RequestBody Product product) throws ProductNotFoundException {
+		
+		Product productToBeUpdated = prodRepo.findProductByName(name);
+		productToBeUpdated.setName(product.getName());
+		productToBeUpdated.setDiscountPercent(product.getDiscountPercent());
+		
+		return prodRepo.save(productToBeUpdated);		
 	}
 	
 }
